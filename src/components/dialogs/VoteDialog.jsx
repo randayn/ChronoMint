@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import moment from 'moment'
 import pluralize from 'pluralize'
+import { Translate } from 'react-redux-i18n'
 import { connect } from 'react-redux'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { RaisedButton } from 'material-ui'
@@ -14,6 +15,10 @@ import ModalDialog from './ModalDialog'
 import DoughnutChart from 'components/common/DoughnutChart/DoughnutChart'
 
 import './VoteDialog.scss'
+
+function prefix (token) {
+  return 'components.dialogs.VoteDialog.' + token
+}
 
 export class VoteDialog extends React.Component {
 
@@ -53,16 +58,17 @@ export class VoteDialog extends React.Component {
                   <div styleName='layer layerHead'>
                     <div styleName='entry entryDate'>
                       <div styleName='entryTitle'>{details.daysLeft}</div>
-                      <div styleName='entryLabel'>{pluralize('day', details.daysLeft, false)} left</div>
+                      {/*<div styleName='entryLabel'>{pluralize('day', details.daysLeft, false)} left</div>*/}
+                      <div styleName='entryLabel'><Translate value={prefix('daysLeft')} /></div>
                     </div>
                     <div styleName='entry entryStatus'>
-                      <div styleName='entryBadge'>Ongoing</div>
+                      <div styleName='entryBadge'><Translate value={prefix('ongoing')} /></div>
                     </div>
                   </div>
                   <div styleName='layer layerChart'>
                     <div styleName='entry entryTotal'>
                       <div styleName='entryTitle'>{details.percents.toString()}%</div>
-                      <div styleName='entryLabel'>TIME Holders already voted</div>
+                      <div styleName='entryLabel'><Translate value={prefix('timeHoldersAlreadyVoted')} /></div>
                     </div>
                     <div styleName='chart chart1'>
                       <DoughnutChart key={details} weight={0.08} items={[
@@ -83,33 +89,33 @@ export class VoteDialog extends React.Component {
                 <div styleName='inner'>
                   <div styleName='layer layerEntries'>
                     <div styleName='entry entryPublished'>
-                      <div styleName='entryLabel'>Published:</div>
-                      <div styleName='entryValue'>{details.published && moment(details.published).format('MMM Do, YYYY') || (<i>No</i>)}</div>
+                      <div styleName='entryLabel'><Translate value={prefix('published')} />:</div>
+                      <div styleName='entryValue'>{details.published && moment(details.published).format('MMM Do, YYYY') || (<i><Translate value={prefix('no')} /></i>)}</div>
                     </div>
                     <div styleName='entry entryFinished'>
-                      <div styleName='entryLabel'>End date:</div>
-                      <div styleName='entryValue'>{details.endDate && moment(details.endDate).format('MMM Do, YYYY') || (<i>No</i>)}</div>
+                      <div styleName='entryLabel'><Translate value={prefix('endDate')} />:</div>
+                      <div styleName='entryValue'>{details.endDate && moment(details.endDate).format('MMM Do, YYYY') || (<i><Translate value={prefix('no')} /></i>)}</div>
                     </div>
                     <div styleName='entry entryRequired'>
-                      <div styleName='entryLabel'>Required votes:</div>
+                      <div styleName='entryLabel'><Translate value={prefix('requiredVotes')} />:</div>
                       <div styleName='entryValue'>
                         {details.voteLimit == null
-                          ? (<i>No</i>)
+                          ? (<i><Translate value={prefix('no')} /></i>)
                           : (<span>{details.voteLimit.toString()} TIME</span>)
                         }
                       </div>
                     </div>
                     <div styleName='entry entryReceived'>
-                      <div styleName='entryLabel'>Received votes:</div>
+                      <div styleName='entryLabel'><Translate value={prefix('receivedVotes')} />:</div>
                       <div styleName='entryValue'>{details.received.toString()} TIME</div>
                     </div>
                     <div styleName='entry entryVariants'>
-                      <div styleName='entryLabel'>Variants:</div>
-                      <div styleName='entryValue'>{details.options.count() || (<i>No</i>)}</div>
+                      <div styleName='entryLabel'><Translate value={prefix('variants')} />:</div>
+                      <div styleName='entryValue'>{details.options.count() || (<i><Translate value={prefix('no')} /></i>)}</div>
                     </div>
                     <div styleName='entry entryDocuments'>
-                      <div styleName='entryLabel'>Documents:</div>
-                      <div styleName='entryValue'>{details.files.count() || (<i>No</i>)}</div>
+                      <div styleName='entryLabel'><Translate value={prefix('documents')} />:</div>
+                      <div styleName='entryValue'>{details.files.count() || (<i><Translate value={prefix('no')} /></i>)}</div>
                     </div>
                   </div>
                 </div>
@@ -141,7 +147,7 @@ export class VoteDialog extends React.Component {
               {details.options && details.options.count()
                 ? (
                   <div styleName='column'>
-                    <h3 styleName='title'>Choose option</h3>
+                    <h3 styleName='title'><Translate value={prefix('chooseOption')} /></h3>
                     <div styleName='options'>
                       <div styleName='optionsTable'>
                         {details.options.valueSeq().map((option, index) => (
@@ -177,7 +183,7 @@ export class VoteDialog extends React.Component {
             <div styleName='footer'>
               <RaisedButton
                 styleName='action'
-                label='Vote'
+                label={<Translate value={prefix('vote')} />}
                 type='submit'
                 primary
                 disabled={this.state.choice === null}
