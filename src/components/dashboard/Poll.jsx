@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import pluralize from 'pluralize'
+//import pluralize from 'pluralize'
 import moment from 'moment'
 
 import { connect } from 'react-redux'
