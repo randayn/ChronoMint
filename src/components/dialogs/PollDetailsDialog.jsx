@@ -164,7 +164,7 @@ export class VoteDialog extends React.Component {
                           {details.files.valueSeq().map((file, index) => (
                             <a key={index} styleName='listItem' href='#'>
                               <i className='material-icons'>insert_drive_file</i>
-                              <span styleName='itemTitle'>file-name.pdf</span>
+                              <span styleName='listItemTitle'>file-name.pdf</span>
                             </a>
                           ))}
                         </div>
